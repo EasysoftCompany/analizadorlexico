@@ -1,14 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package lexictest;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -24,8 +21,12 @@ public class Lexictest {
      * @param args the command line arguments
      */
     private static final Logger LOG = Logger.getLogger(Lexictest.class.getName()); //Creamos un Logger que nos permita manejar las excepciones y poder visualizarlas en la consola
-
+    private static String allLanguages = "";
     public static void main(String[] args) {
+        
+        //Mostramos un menaje de bienvenida y una descripcion de lo que hace el programa
+        JOptionPane.showMessageDialog(null, "Realizare un analisis lexico por linea a un archivo que elija bajo la expresion regular que se interpreta como:\n\n\t Cualquier cosa, segudo de un espacio en blanco, seguido de un guion, seguido de otro espacio en blanco, seguido de lo que sea \n\n\n\t Para comenzar seleccione un archivo! ");
+        
         File archivo = null;
         FileReader fr = null;
         BufferedReader br = null;
@@ -41,13 +42,13 @@ public class Lexictest {
                 br = new BufferedReader(fr);//Creamos un BufferReader con el archivo que leimos
 
                 String linea;
-                
-                boolean empiezanLenguajes = false; 
+
+                boolean empiezanLenguajes = false;
                 //Existe una linea con caracteres "* * * *" a partir de ahi todos son lenguajes de programacion
                 //esta variable nos servira para detectar si ya hemos pasado esa linea
 
                 regex regex = new regex(); //Instancia de la clase regex
-
+                
                 while ((linea = br.readLine()) != null) {
                     
                     if (regex.empiezanLenguajes(linea)) { //Si coincide con la expresion regular de Empiezan leguajes la variable de control se hace true
@@ -58,18 +59,31 @@ public class Lexictest {
 
                         if (empiezanLenguajes) { //Si ya hemos pasado la linea * * * * y cumple con el criterio asumimos que es un lenguaje de programacion
                             contador++; // Aumentamos el contador en 1
-                            int index = linea.indexOf('-'); //Buscamos en la linea la posicion del caracter '-'
-                            char[] leng = linea.toCharArray(); //Convertimos la linea en un arreglo de caracteres
-                            for (int i = 0; i < index-1; i++) { //desde el inicio del arreglo de la linea y hasta la posicion donde encontro ' - ' menos uno
-                                System.out.print(leng[i]); //Imprime el arreglo
-                            }
-                            System.out.println("\n"); //despues imprime un salto de linea
+                            printArrayUntilIndex(linea.toCharArray(), linea.indexOf('-')); 
+                            /*
+                            Recibe 2 parametros, el primero es un arreglo de caracteres y el segundo es la posicion del arreglo hasta el que debemos imprimir
+                            Para esto hacemos uso de linea.toCharArray() que transforma la cadena de texto en un arreglo de caracteres
+                            y de linea.lastIndexOf() que nos regresa un entero con la posicion del caracter buscado
+                            
+                            Entonces imprimiremos el arreglo hasta el indice del caracter
+                            
+                            P Ej.
+                            
+                            UNIDAD PROFESIONAL - INTERDISCIPLINARIA...
+                            
+                            Solo imprimiria: 
+                                UNIDAD PROFESIONAL
+                            
+                            */
                         }
                     }
 
                 }
-                JOptionPane.showMessageDialog(null, "Lenguajes de programacion detectados: "+contador);
+                JOptionPane.showMessageDialog(null, "Lenguajes de programacion detectados: " + contador);
                 System.out.println("CUENTA: " + contador);
+                outputStreamLog(); //llamamos a la funcion outputStreamLog() que nos creara un archivo de texto en el escritorio con los lenguajes que detecto
+                JOptionPane.showMessageDialog(null, "He creado un archivo en el Escritorio donde podras visualizar los lenguajes que he detectado (Recomiendo usar algun editor de textos como Atom, SublimeText, Etc)");
+                
             } catch (IOException e) {
                 LOG.log(Level.WARNING, e.toString());
             } finally {
@@ -85,4 +99,37 @@ public class Lexictest {
             LOG.log(Level.WARNING, "No se selecciono archivo, Hasta luego");
         }
     }
+
+    public static void printArrayUntilIndex(char[] arreglo, int index) {
+
+       StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < index - 1; i++) { //desde el inicio del arreglo de la linea y hasta la posicion donde encontro ' - ' menos uno
+            System.out.print(arreglo[i]); //Imprime el arreglo
+            sb.append(arreglo[i]);
+        };
+        addToOutstream(sb.toString());
+        System.out.println("\n"); //despues imprime un salto de linea
+    }
+    public static void addToOutstream(String lenguaje){ //añade el lenguaje de programacion a la variable estatica allLanguajes
+        allLanguages += lenguaje; 
+        allLanguages += "\n\n";
+    }
+    public static void outputStreamLog(){
+        FileWriter fichero = null;
+        try {
+             fichero = new FileWriter(javax.swing.filechooser.FileSystemView.getFileSystemView().getHomeDirectory()+"\\lang.txt",true);
+             PrintWriter pw = new PrintWriter(fichero);  
+             pw.println(allLanguages);
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, e.toString());
+        }finally {
+           try {
+           // Nuevamente aprovechamos el finally para 
+           // asegurarnos que se cierra el fichero.
+           if (null != fichero)
+              fichero.close();
+           } catch (IOException e2) {
+              LOG.log(Level.SEVERE, e2.toString());
+           }
+    }}
 }
