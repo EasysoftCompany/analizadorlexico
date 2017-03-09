@@ -2,7 +2,7 @@
 
 <ClassDiagram name="lexictest">
   <ClassDiagramComponents>
-    <Class name="Lexictest" package="lexictest" visibility="public" xPosition="45.0" yPosition="49.0">
+    <Class name="Lexictest" package="lexictest" visibility="public" xPosition="103.0" yPosition="163.0">
       <Fields>
         <Field name="LOG" type="Logger" visibility="private" isStatic="true" isFinal="true"/>
         <Field name="allLanguages" type="String" visibility="private" isStatic="true"/>
@@ -22,7 +22,7 @@
         <Method name="outputStreamLog" returnType="void" visibility="public" isStatic="true"/>
       </Methods>
     </Class>
-    <Class name="regex" package="lexictest" visibility="public" xPosition="626.0" yPosition="88.0">
+    <Class name="regex" package="lexictest" visibility="public" xPosition="612.0" yPosition="220.0">
       <Fields/>
       <Constructors/>
       <Methods>
