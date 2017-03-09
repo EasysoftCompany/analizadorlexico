@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="lexictest">
+  <ClassDiagramComponents>
+    <Class name="Lexictest" package="lexictest" visibility="public" xPosition="45.0" yPosition="49.0">
+      <Fields>
+        <Field name="LOG" type="Logger" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="allLanguages" type="String" visibility="private" isStatic="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String[]" name="args"/>
+        </Method>
+        <Method name="printArrayUntilIndex" returnType="void" visibility="public" isStatic="true">
+          <Argument type="char[]" name="arreglo"/>
+          <Argument type="int" name="index"/>
+        </Method>
+        <Method name="addToOutstream" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="lenguaje"/>
+        </Method>
+        <Method name="outputStreamLog" returnType="void" visibility="public" isStatic="true"/>
+      </Methods>
+    </Class>
+    <Class name="regex" package="lexictest" visibility="public" xPosition="626.0" yPosition="88.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="isEmptyLine" returnType="boolean" visibility="public">
+          <Argument type="String" name="linea"/>
+        </Method>
+        <Method name="isLanguage" returnType="boolean" visibility="public">
+          <Argument type="String" name="linea"/>
+        </Method>
+        <Method name="empiezanLenguajes" returnType="boolean" visibility="public">
+          <Argument type="String" name="linea"/>
+        </Method>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <UseRelation name="" source="lexictest.regex" target="lexictest.Lexictest" sourceCardinality="1..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
