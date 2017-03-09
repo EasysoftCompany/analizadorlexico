@@ -16,7 +16,7 @@ public boolean isEmptyLine(String linea){
     return Pattern.matches("", linea);
 }    
 public boolean isLanguage(String linea){
-    return Pattern.matches(".*[\\s]+[-]+[\\s].*", linea);
+    return Pattern.matches(".*[\\s]+[-]+[\\s].*", linea); // Cualquier cosa (.*) seguido de (+) un espacio en blanco ( [\\s] ) seguido de un guion medio ( [-] ) seguido de otro espacio seguido de cualquier cosa
 }
 
 public boolean empiezanLenguajes(String linea){
